@@ -10,6 +10,12 @@ def hex_to_rgb(hex_color):
     hex_color = hex_color.lstrip('#')
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
+
+def get_available_fonts():
+    font_folder_path = 'static/fonts'
+    font_files = [file for file in os.listdir(font_folder_path) if file.endswith('.ttf')]
+    return [os.path.splitext(file)[0] for file in font_files]
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -53,6 +59,11 @@ def generate_image():
     except Exception as e:
         error_message = f"Error: {str(e)}"
         return jsonify({'error': error_message})
+    
+@app.route('/get_fonts')
+def get_fonts():
+    fonts = get_available_fonts()
+    return jsonify({'fonts': fonts})
 
 if __name__ == '__main__':
     app.run(debug=True)

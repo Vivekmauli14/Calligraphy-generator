@@ -5,183 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/assets/main.css">
+    <script defer src="static/assets/script.js"></script>
     <title>Text Image Generator</title>
 
-    <style>
-        @font-face {
-            font-family: 'barakhadi';
-            src: url('static/fonts/barakhadi.ttf') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'AMS MahaBharat';
-            src: url('static/fonts/AMS MahaBharat.ttf') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'arial';
-            src: url('static/fonts/arial.ttf') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'tnr';
-            src: url('static/fonts/tnr.ttf') format('truetype');
-        }
-
-        body {
-            font-family: 'arial', sans-serif;
-            background: linear-gradient(45deg, #2f2f2f, #555555);
-            color: #ffffff;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        label {
-            margin-right: 10px;
-            font-size: 16px;
-        }
-
-        input,
-        select {
-            margin-top: 5px;
-            padding: 12px; /* Increased padding for a larger input area */
-            font-size: 18px; /* Increased font size for better visibility */
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            background-color: #fff;
-            color: #333;
-        }
-
-        button {
-            margin-top: 15px; /* Increased margin for better separation */
-            padding: 14px 28px; /* Increased padding for a larger button */
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #display-text {
-            font-size: 72px; /* Increased font size for better visibility */
-            margin-top: 20px;
-            color: #ff0000; /* Default color is red */
-        }
-
-        #virtual-keyboard {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 20px;
-        }
-
-        .virtual-key {
-            width: 60px; /* Increased width for a larger key */
-            height: 60px; /* Increased height for a larger key */
-            border: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            transition: transform 0.1s ease;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .key-name,
-        .key-character {
-            color: #aaa;
-            position: absolute;
-            bottom: 8px; /* Increased bottom distance for better visibility */
-            text-align: center;
-        }
-
-        .key-character {
-            font-size: 16px; /* Increased font size for better visibility */
-        }
-
-        .virtual-key:hover {
-            transform: scale(1.1);
-        }
-
-        #reset-button {
-            cursor: pointer;
-            font-size: 28px; /* Increased font size for a larger icon */
-            color: #fff;
-            background: none;
-            border: none;
-            margin-top: 15px; /* Increased margin for better separation */
-            margin-left: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        #reset-icon {
-            margin-left: 5px;
-        }
-
-        #color-picker {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        #color-display {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
-        }
-
-        #color-input {
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-    </style>
 </head>
 
 <body>
     <form action="/generate" method="post">
         <div class="row">
             <label for="font">Font:</label>
-            <select id="font" name="font" onchange="updateVirtualKeyboard(this.value)" required>
-                <!-- Hardcoded options for demonstration -->
-                <option value="barakhadi">Barakhadi</option>
-                <option value="AMS MahaBharat">AMS MahaBharat</option>
-                <option value="arial">Arial</option>
-                <option value="tnr">Times New Roman</option>
-            </select>
-            
+            <select  id="font" name="font" onchange="updateVirtualKeyboard(this.value)" required style="width: 350px; height: 50px; font-size: 20px;"></select>
             <label for="text">Text:</label>
             <input type="text" id="text" name="text" oninput="updateDisplay()" required>
             <button id="reset-button" type="button" onclick="resetText()">Reset
@@ -189,11 +23,11 @@
             </button>
         </div>
         <label for="favcolor">Select color:</label>
-            <input type="color" id="favcolor" name="favcolor" value="#ff0000" onchange="updateDisplayColor()">
-            <div id="color-picker">
-                <div id="color-display"></div>
-                <input type="text" id="color-input" readonly>
-            </div>
+        <input type="color" id="favcolor" name="favcolor" value="#ffec00" onchange="updateDisplayColor()">
+        <div id="color-picker">
+            <div id="color-display"></div>
+            <input type="text" id="color-input" readonly>
+        </div>
         <!-- <button type="button" onclick="previewText()">Preview Text</button> -->
         <button type="button" onclick="downloadImage()">Download PNG</button>
     </form>
@@ -204,163 +38,7 @@
 
     <div id="virtual-keyboard"></div>
 
-    <script>
-        function updateDisplay() {
-            var inputText = document.getElementById('text').value;
-            var displayTextElement = document.getElementById('display-text');
-            var selectedFont = document.getElementById('font').value;
-            var selectedColor = document.getElementById('favcolor').value;
-
-            // Dynamically set the font style and color for real-time typed display
-            displayTextElement.style.fontFamily = selectedFont;
-            displayTextElement.style.color = selectedColor;
-            displayTextElement.innerText = '' + inputText;
-
-            // Update color display and input field
-            document.getElementById('color-display').style.backgroundColor = selectedColor;
-            document.getElementById('color-input').value = selectedColor;
-        }
-
-        function updateDisplayColor() {
-            var selectedColor = document.getElementById('favcolor').value;
-
-            // Update color display and input field
-            document.getElementById('color-display').style.backgroundColor = selectedColor;
-            document.getElementById('color-input').value = selectedColor;
-        }
-
-        function previewText() {
-    var formData = new FormData(document.forms[0]);
-    var selectedFont = document.getElementById('font').value;
-
-    var previewTextElement = document.getElementById('display-text');
-
-    // Dynamically set the font style based on the selected font
-    previewTextElement.style.fontFamily = selectedFont;
-
-    // Get the color value from the color picker
-    var selectedColor = document.getElementById('favcolor').value;
-
-    // Dynamically set the text color based on the selected color
-    previewTextElement.style.color = selectedColor;
-
-    // Update the preview text with the typed text
-    previewTextElement.innerText = '' + document.getElementById('text').value;
-
-    updateVirtualKeyboard(selectedFont);
-}
-
-// Attach the previewText function to the 'input' event of the color picker
-document.getElementById('favcolor').addEventListener('input', previewText);
-
-// Attach the previewText function to the 'input' event of the text input
-document.getElementById('text').addEventListener('input', previewText);
-
-
-        function downloadImage() {
-            var formData = new FormData(document.forms[0]);
-
-            fetch('/generate', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.blob())
-                .then(blob => {
-                    var url = window.URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'output.png';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function resetText() {
-            document.getElementById('text').value = '';
-            updateDisplay();
-        }
-
-        function updateVirtualKeyboard(fontName) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz `1234567890-=[];';
-
-            const virtualKeyboardContainer = document.getElementById('virtual-keyboard');
-            virtualKeyboardContainer.innerHTML = ''; // Clear previous content
-
-            const fontTester = document.createElement('span');
-            fontTester.style.visibility = 'hidden';
-            fontTester.style.fontFamily = fontName;
-            document.body.appendChild(fontTester);
-
-            characters.split('').forEach(char => {
-                fontTester.textContent = char;
-                const keyElement = document.createElement('div');
-                keyElement.classList.add('virtual-key');
-                keyElement.style.fontFamily = fontName;
-
-                const keyName = document.createElement('div');
-                keyName.classList.add('key-name');
-                keyName.textContent = char;
-
-                const keyCharacter = document.createElement('div');
-                keyCharacter.classList.add('key-character');
-                keyCharacter.textContent = fontTester.textContent;
-
-                keyElement.appendChild(keyName);
-                keyElement.appendChild(keyCharacter);
-
-                keyElement.addEventListener('click', function () {
-                    // Update the input field with the clicked key's value
-                    var inputText = document.getElementById('text');
-                    inputText.value += char;
-
-                    // Update the display as well
-                    updateDisplay();
-                });
-
-                virtualKeyboardContainer.appendChild(keyElement);
-            });
-
-            document.body.removeChild(fontTester);
-        }
-
-        // Example: Call this function when the font is selected
-        var selectedFont = document.getElementById('font').value;
-        updateVirtualKeyboard(selectedFont);
-
-        // Add styles for responsiveness to the virtual keyboard container
-        const virtualKeyboardContainer = document.getElementById('virtual-keyboard');
-        virtualKeyboardContainer.style.display = 'flex';
-        virtualKeyboardContainer.style.gap = '5px';
-        virtualKeyboardContainer.style.flexWrap = 'wrap';
-
-        function generateFontFaceRules(fontNames) {
-            var fontFaceRules = '';
-
-            fontNames.forEach(function (fontName) {
-                fontFaceRules += `
-                    @font-face {
-                        font-family: '${fontName}';
-                        src: url('static/fonts/${fontName}.ttf') format('truetype');
-                    }
-                `;
-            });
-
-            return fontFaceRules;
-        }
-
-        // Example usage:
-        var fontNames = ['barakhadi', 'arial', 'AMS MahaBharat']; // Add more font names as needed
-        var fontFaceStyles = generateFontFaceRules(fontNames);
-
-        // Apply the generated font face styles to a <style> element or your stylesheet
-        var styleElement = document.createElement('style');
-        styleElement.innerHTML = fontFaceStyles;
-        document.head.appendChild(styleElement);
-
-    </script>
+    
 </body>
 
 </html>
