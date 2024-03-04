@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+  <script src="https://unpkg.com/konva@7.0.7/konva.min.js"></script>
+  <title>textgen</title>
+</head>
+<body>
+  <header>
+    <h1>textgen</h1>
+  </header>
+
+  <div id="options">
+    <label for="font">Font:</label>
+    <select id="font" class="big-dropdown">
+      <!-- Add font options dynamically using JS -->
+    </select>
+
+    <label for="fontSize">Font Size:</label>
+    <select id="fontSize" class="big-dropdown">
+      <!-- Add font size options dynamically using JS -->
+    </select>
+
+    <label for="fontColor">Font Color:</label>
+    <input type="color" id="fontColor">
+
+    <label for="bold">Bold:</label>
+    <input type="checkbox" id="bold">
+
+  </div>
+
+  <div id="canvas-container"></div>
+
+  <button id="downloadBtn">Download PNG</button>
+
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+</html>

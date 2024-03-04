@@ -1,0 +1,176 @@
+
+@font-face {
+    font-family: 'AMS Aakul 1';
+    src: url('static/fonts/AMS Aakul 1.ttf') format('truetype');
+}
+
+/* Additional styles for dynamically loaded fonts */
+#font-preview {
+    font-size: 20px;
+    margin-top: 10px;
+}
+@font-face {
+    font-family: 'barakhadi';
+    src: url('static/fonts/barakhadi.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'AMS MahaBharat';
+    src: url('static/fonts/AMS MahaBharat.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'arial';
+    src: url('static/fonts/arial.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'tnr';
+    src: url('static/fonts/tnr.ttf') format('truetype');
+}
+
+body {
+    font-family: 'arial', sans-serif;
+    background: linear-gradient(45deg, #2f2f2f, #555555);
+    color: #ffffff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+input,
+select {
+    margin-top: 5px;
+    padding: 12px; /* Increased padding for a larger input area */
+    font-size: 18px; /* Increased font size for better visibility */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+}
+
+select {
+    font-family: 'arial'; /* Set font family for the dropdown */
+    font-size: 16px; /* Adjust font size for better visibility */
+    padding: 8px; /* Adjust padding for a larger input area */
+}
+
+button {
+    margin-top: 15px; /* Increased margin for better separation */
+    padding: 14px 28px; /* Increased padding for a larger button */
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#display-text {
+    font-size: 72px; /* Increased font size for better visibility */
+    margin-top: 20px;
+    color: #ff0000; /* Default color is red */
+}
+
+#virtual-keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.virtual-key {
+    width: 60px; /* Increased width for a larger key */
+    height: 60px; /* Increased height for a larger key */
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.1s ease;
+    flex-direction: column;
+    position: relative;
+}
+
+.key-name,
+.key-character {
+    color: #aaa;
+    position: absolute;
+    bottom: 8px; /* Increased bottom distance for better visibility */
+    text-align: center;
+}
+
+.key-character {
+    font-size: 16px; /* Increased font size for better visibility */
+}
+
+.virtual-key:hover {
+    transform: scale(1.1);
+}
+
+#reset-button {
+    cursor: pointer;
+    font-size: 28px; /* Increased font size for a larger icon */
+    color: #fff;
+    background: none;
+    border: none;
+    margin-top: 15px; /* Increased margin for better separation */
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#reset-icon {
+    margin-left: 5px;
+}
+
+#color-picker {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#color-display {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+#color-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}

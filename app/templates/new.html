@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+
+</head>
+
+<body>
+    
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <img src="/static/assets/img/lekha.svg" class="img-fluid"
+                style="max-width: 150px; height: auto; margin-top: 5px;" alt="Lekha">
+        </div>
+    </div>
+
+    <div class="container"
+        style="display: flex; flex-direction: column; align-items: center; margin-top: 50px;">
+        <form id="textForm" action="/generate" method="post">
+            <div class="row" style="display: flex; justify-content: center;">
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false" id="selected_font">
+                            Select Font
+                        </button>
+                        <input type="hidden" name="font" id="selected_font_hidden">
+                        <ul class="dropdown-menu">
+                            <!-- Font options will be dynamically added here -->
+                            <li><a class="dropdown-item" style="font-family: AMS_Aaditya;" href="#">AMS_Aaditya</a>
+                            </li>
+                            <li><a class="dropdown-item" style="font-family: AMS_Aakash;" href="#">AMS_Aakash</a>
+                            </li>
+                            <li><a class="dropdown-item" style="font-family: AMS_Anaram;" href="#">AMS_Anaram</a>
+                            </li>
+                            <li><a class="dropdown-item" style="font-family: AMS_Chhatrapati;"
+                                    href="#">AMS_Chhatrapati</a></li>
+                            <li><a class="dropdown-item" style="font-family: AMS_Kangna;" href="#">AMS_Kangna</a>
+                            </li>
+                            <li><a class="dropdown-item" style="font-family: AMS_Kesri;" href="#">AMS_Kesri</a>
+                            </li>
+                            <li><a class="dropdown-item" style="font-family: AMS_Khadu;" href="#">AMS_Khadu</a>
+                            </li>
+                            <li><a class="dropdown-item" style="font-family: AMS_MahaBharat;"
+                                    href="#">AMS_MahaBharat</a></li>
+                            <li><a class="dropdown-item" style="font-family: barakhadi;" href="#">barakhadi</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <label for="colorpicker" style="white-space: nowrap; margin: 10px;"> Select Color:</label>
+                    <input type="color" id="colorpicker" name="color" style="width:40px;">
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="modern-box" style="margin: auto; height: 100px;">
+                    <input type="text" id="invisible-input" class="invisible-input" name="text" placeholder="Select Font">
+
+                </div>
+                <div class="message" id="message" style="text-align: center;"></div>
+            </div>
+            <div class="keyboard-container" style="margin-top: 20px;"></div>
+
+            <!-- Centered submit button container -->
+            <div class="submit-btn-container">
+                <button type="submit" class="btn btn-primary">Download PNG</button>
+            </div>
+ 
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Your JavaScript code -->
+    <script src="/static/assets/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+     
+
+    </script>
+    
+
+    <script>
+
+
+        // Function to generate font face rules
+function generateFontFaceRules(fontNames) {
+  var fontFaceRules = '';
+
+  fontNames.forEach(function (fontName) {
+      fontFaceRules += `
+          @font-face {
+              font-family: '${fontName}';
+              src: url('static/fonts/${fontName}.ttf');
+          }
+      `;
+  });
+
+  // Apply the generated font face styles to a <style> element or your stylesheet
+  var styleElement = document.createElement('style');
+  styleElement.innerHTML = fontFaceRules;
+  document.head.appendChild(styleElement);
+}
+
+// Array of font names
+var fontNames = ['AMS_Aaditya', 'AMS_Aakash', 'AMS_Anaram', 'AMS_Chhatrapati', 'AMS_Deepak', 'AMS_Deepak_Regular', 'AMS_Kangna', 'AMS_Kesri', 'AMS_Khadu', 'AMS_MahaBharat', 'barakhadi'];
+
+// Call the function to generate font face rules
+generateFontFaceRules(fontNames);
+
+function updateTextInputFont(fontName) {
+    const inputBox = document.querySelector('.invisible-input');
+    inputBox.style.fontFamily = fontName;
+    inputBox.placeholder = 'yaeTae oaqpa kra...';
+    document.getElementById('selected_font_hidden').value = fontName; // Assign the font name to the hidden input field
+    generateKeyboard(fontName); // Generate keyboard for the selected font
+}
+
+// Function to generate the keyboard for the selected font
+function generateKeyboard(fontName) {
+  const keyboardContainer = document.querySelector('.keyboard-container');
+  keyboardContainer.innerHTML = ''; // Clear previous keyboard
+
+  // Create a canvas element to measure the glyphs
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Set the font style
+  ctx.font = `24px ${fontName}`; // Adjust font size for mobile
+
+  // Get the width of each glyph
+  const glyphs = {};
+  for (let i = 32; i <= 126; i++) { // ASCII range
+      const char = String.fromCharCode(i);
+      const width = ctx.measureText(char).width;
+      if (width > 0) { // Exclude empty glyphs
+          glyphs[char] = char;
+      }
+  }
+
+  // Generate keyboard keys based on the extracted glyphs
+  for (let glyph in glyphs) {
+      if (glyphs.hasOwnProperty(glyph)) {
+          const button = document.createElement('div');
+          button.classList.add('keyboard-key');
+          button.textContent = glyph;
+          button.style.fontFamily = fontName
+
+          // Add click event listener to insert glyph into input box
+          button.addEventListener('click', function () {
+              const inputBox = document.querySelector('.invisible-input');
+              const currentText = inputBox.value;
+              inputBox.value = currentText + glyph;
+          });
+
+          keyboardContainer.appendChild(button);
+      }
+  }
+}
+
+
+// Function to load fonts and preview
+function loadFontsAndPreview() {
+  const dropdownMenu = document.querySelector('.dropdown-menu');
+
+  // Add event listener to dropdown menu
+  dropdownMenu.addEventListener('click', function(event) {
+      if (event.target.classList.contains('dropdown-item')) {
+          const selectedFont = event.target.style.fontFamily;
+          updateTextInputFont(selectedFont);
+      }
+  });
+}
+// Function to update font style and glyph characters of keyboard keys
+function updateVirtualKeyboard(fontName) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz `1234567890-=[];';
+
+  const virtualKeyboardContainer = document.getElementById('virtual-keyboard');
+  virtualKeyboardContainer.innerHTML = '';
+
+  const fontTester = document.createElement('span');
+  fontTester.style.visibility = 'hidden';
+  fontTester.style.fontFamily = fontName;
+  document.body.appendChild(fontTester);
+
+  characters.split('').forEach(char => {
+      fontTester.textContent = char;
+      const keyElement = document.createElement('div');
+      keyElement.classList.add('virtual-key');
+      keyElement.style.fontFamily = fontName;
+
+      const keyCharacter = document.createElement('div');
+      keyCharacter.classList.add('key-character');
+      keyCharacter.textContent = fontTester.textContent;
+      keyCharacter.style.fontFamily = fontName
+
+      keyElement.appendChild(keyCharacter);
+
+      keyElement.addEventListener('click', function () {
+          var inputText = document.getElementById('text');
+          inputText.value += char;
+          updateDisplay();
+      });
+
+      virtualKeyboardContainer.appendChild(keyElement);
+  });
+
+  document.body.removeChild(fontTester);
+}
+
+
+
+// Call the function to load fonts and preview
+loadFontsAndPreview();
+
+// Changing the color of the text inside input tag
+// Get references to the color picker and text input elements
+const colorPicker = document.getElementById('colorpicker');
+const textInput = document.querySelector('.invisible-input');
+
+// Add event listener to the color picker input
+colorPicker.addEventListener('input', function(event) {
+    // Get the selected color value
+    const selectedColor = event.target.value;
+
+    // Set the color of the text input
+    textInput.style.color = selectedColor;
+});
+
+
+
+function resetText() {
+    document.getElementById('text').value = '';
+    updateDisplay();
+}
+
+
+
+    </script>
+
+</body>
+
+</html>
