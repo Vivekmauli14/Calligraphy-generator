@@ -118,7 +118,8 @@ function previewText() {
 
 function downloadImage() {
     var formData = new FormData(document.forms[0]);
-
+    var text= document.getElementById('invisible-input').value
+    console.log(text)
     fetch('/generate', {
         method: 'POST',
         body: formData,
@@ -128,7 +129,7 @@ function downloadImage() {
             var url = window.URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
-            a.download = 'output.png';
+            a.download = `${text}.png`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);

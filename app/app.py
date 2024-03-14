@@ -25,7 +25,7 @@ def generate_image():
     color = request.form.get('color')
     color_tuple = hex_to_rgb(color)
 
-    print('Printed man',text,font_name,color)
+ 
     # Fetch the selected font path
     font_path = f"static/fonts/{font_name}.ttf"
 
@@ -40,7 +40,7 @@ def generate_image():
         font = ImageFont.truetype(font_path, font_size)
 
         # Create an image with a transparent background
-        image = Image.new('RGBA', (1000, 250), color=(255, 255, 255, 0))
+        image = Image.new('RGBA', (450, 250), color=(0, 0,0,0))
         draw = ImageDraw.Draw(image)
 
         # Set a fixed center position
@@ -55,7 +55,7 @@ def generate_image():
         image.save(image_stream, format='PNG')
         image_stream.seek(0)
 
-        return send_file(image_stream, mimetype='image/png', download_name='output.png')
+        return send_file(image_stream, mimetype='image/png', download_name=f'{text}.png')
     except Exception as e:
         error_message = f"Error: {str(e)}"
         return jsonify({'error': error_message})
